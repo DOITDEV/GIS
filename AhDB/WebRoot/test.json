@@ -1,0 +1,15 @@
+{
+    "hosInfo": [
+        {
+         "name": 1,
+		 "address": 1,
+		 "lever": 1,  
+		 "docNum": 1,
+		 "nursNum": 0,
+		 "phoneNum": 0,
+		 "corporation": 0,
+		 "coors_x": 0,
+		 "coors_y": 0
+        }
+    ]
+}

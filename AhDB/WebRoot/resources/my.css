@@ -1,0 +1,328 @@
+/* Ext 4.0 */
+
+#header {
+   // background: url(images/center.bmp) repeat-x center;
+}
+#header h1 {
+    font-size: 16px;
+    color: #fff;
+    font-weight: normal;
+    padding: 5px 10px;
+}
+.top {
+	color: #FFFFFF;
+	background: url(images/hd-bg.gif) repeat-x;
+	height: 40px;
+	line-height:40px;
+	overflow:hidden;
+	vertical-align:middle;
+	font-size: 18px;
+	font-family:cursive;
+	//padding: 0 10 0 10;
+	font-weight: bolder;
+}
+/*急救站点*/
+.save_List{
+    background-image:url(images/savePoint.png);
+    font-size: 14px;
+}
+
+/*绘图工具栏*/
+.startPoint{
+    background-image:url(images/start.png);
+    font-size: 14px;
+}
+.endPoint{
+    background-image:url(images/end.png);
+    font-size: 14px;
+}
+.targetPoint{
+    background-image:url(images/hand.png);
+    font-size: 14px;
+}
+
+.map_operate{
+    background-image:url(images/mapOperate.png);
+    font-size: 14px;
+}
+
+.draw{
+    background-image:url(images/draw.gif);
+    font-size: 14px;
+}
+.point{
+    background-image:url(images/point.png);
+    font-size: 14px;
+}
+.line{
+    background-image:url(images/line.png);
+    font-size: 14px;
+}
+.polygon{
+    background-image:url(images/polygon.png);
+    font-size: 14px;
+}
+/*测量工具栏*/
+.measure{
+	background-image:url(images/measure.png);
+    font-size: 14px;
+}
+.lenMeasure{
+	background-image:url(images/length.gif);
+    font-size: 14px;
+}
+
+.areaMeasure{
+	background-image:url(images/area.gif);
+    font-size: 14px;
+}
+
+/*缓冲工具栏*/
+.buffer{
+    background-image:url(images/help.png);/*buffer.png);*/
+    font-size: 14px;
+}
+
+.point_buffer{
+    background-image:url(images/point_buffer.png);
+    font-size: 14px;
+}
+.line_buffer{
+    background-image:url(images/line_buffer.png);
+    font-size: 14px;
+}
+
+.area_buffer{
+    background-image:url(images/area_buffer.png);
+    font-size: 14px;
+}
+.set_buffer{
+    background-image:url(images/set_buffer.png);
+    font-size: 14px;
+}
+/*分析工具栏*/
+.people{
+    background-image:url(images/people.gif);
+    font-size: 14px;
+}
+
+.country{
+    background-image:url(images/country.png);
+    font-size: 14px;
+}
+
+.analyse{
+    background-image:url(images/chart_edit.png);
+    font-size: 14px;
+}
+/*放大*/
+.zoomIn_button{
+    background-image:url(images/magnifier-zoom-in.png);
+    font-size: 14px;
+}
+/*缩小*/
+.zoomOut_button{
+    background-image:url(images/magnifier-zoom-out.png);
+    font-size: 14px;
+}
+
+/*平移*/
+.pan_button{
+    background-image:url(images/hand.png);
+    font-size: 14px;
+}
+
+/*全屏*/
+.fullScreen_btn{
+    background-image:url(images/globe.png);
+    font-size: 14px;
+}
+
+
+/*120help*/
+.120_btn{
+    background-image:url(images/help.png);
+    font-size: 14px;
+}
+
+/*清除*/
+.brush_button{
+    background-image:url(images/brush.gif);
+    font-size: 14px;
+}
+
+/*顶部工具栏*/
+.loginTime{
+    background-image:url(images/clock.png);
+    font-size: 14px;
+}
+
+.userName{
+    background-image:url(images/userMenu.png);
+    font-size: 14px;
+}
+
+.userClass{
+    background-image:url(images/userClass.gif);
+    font-size: 14px;
+}
+.userMenu{
+    background-image:url(images/userMenu.png);
+    font-size: 14px;
+}
+
+.serverMenu{
+    background-image:url(images/serverMenu.png);
+    font-size: 14px;
+}
+
+.logMenu{
+    background-image:url(images/logMenu.png);
+     font-size: 14px;
+}
+.safeMenu{
+    background-image:url(images/safeMenu.png);
+     font-size: 14px;
+}
+
+.help-button {
+	background-image: url( images/help.gif) !important;
+	 font-size: 14px;
+}
+
+.logout-button {
+	background-image: url(images/loginOut.gif) !important;
+	font-size: 14px;
+}
+
+.login-button {
+	background-image: url(images/userClass.gif) !important;
+	font-size: 14px;
+}
+
+/*.top {
+	//color: #FFFFFF;
+	background: url(images/center.gif) repeat-x;
+	//height: 39px;
+	font-size: 18px;
+	font-family:cursive;
+	padding: 5 10 0 10;
+	font-weight: bolder;
+}*/
+.top {
+	
+	background: url(images/center.gif) repeat-x;
+	height: 130px;
+	font-size: 18px;
+	font-family:cursive;
+	padding: 5 10 0 10;
+	font-weight: bolder;
+}
+
+/*用户操作工具栏*/
+.user-find {
+	background-image: url(images/search.png) !important;
+	font-size: 14px;
+}
+
+.user-add {
+	background-image: url(images/add.gif) !important;
+	font-size: 14px;
+}
+.user-delete {
+	background-image: url(images/loginOut.gif) !important;
+	font-size: 14px;
+}
+.user-update {
+	background-image: url(images/line_buffer.png) !important;
+	font-size: 14px;
+}
+
+
+.stop-button {
+	background-image: url( ../images/default/shared/drop-no.gif) !important;
+	 font-size: 14px;
+}
+.yes-button {
+	background-image: url( ../images/default/shared/drop-yes.gif) !important;
+}
+.modify-button {
+	background-image: url( ../images/default/shared/calendar.gif) !important;
+}
+.save-button {
+	background-image: url( ../images/default/shared/save.gif) !important;
+}
+.lock-button {
+	background-image: url( ../images/default/grid/hmenu-lock.gif) !important;
+}
+.unlock-button {
+	background-image: url( ../images/default/grid/hmenu-unlock.gif) !important;
+}
+.excel-button {
+	background-image: url( ../images/default/shared/excel.gif) !important;
+}
+
+.find-button {
+	background-image: url( ../images/default/shared/find.gif) !important;
+}
+
+.risk-icon {
+	background-image: url( ../images/default/shared/risk.gif) !important;
+}
+.run-icon {
+	background-image: url( ../images/default/shared/run.gif) !important;
+}
+.group-icon {
+	background-image: url( ../images/default/shared/group.gif) !important;
+}
+
+
+
+.top-bar {
+	background-image: url(../images/default/toolbar/bg.gif);
+	height: 25px;
+	border: 0px;
+	padding-left: 10px;
+	padding-right: 10px;
+	/* position: absolute;top:39px;left:0px;right:0px;*/
+	font-size: 12px;
+}
+
+.south {
+	text-align: center;
+	//background-color: #DFE8F6;
+	font-size: 12px;
+}
+
+#loading-mask {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 20000;
+	background-color: white;
+}
+
+#loading {
+	position: absolute;
+	left: 45%;
+	top: 40%;
+	padding: 2px;
+	z-index: 20001;
+	height: auto;
+}
+
+#loading .loading-indicator {
+	background: white;
+	color: #444;
+	font: bold 20px tahoma, arial, helvetica;
+	padding: 10px;
+	margin: 0;
+	height: auto;
+}
+
+#loading-msg {
+	font: normal 14px arial, tahoma, sans-serif;
+}
+/* END */
