@@ -1108,6 +1108,10 @@
                     "name": "ShadowPool.js"
                 },
                 {
+                    "path": "../rentinfo/",
+                    "name": "Rent.js"
+                },
+                {
                     "path": "../../src/",
                     "name": "Shadow.js"
                 }

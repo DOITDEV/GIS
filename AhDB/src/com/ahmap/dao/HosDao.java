@@ -19,8 +19,9 @@ public class HosDao {
 //	@Autowired
 //	private JdbcTemplate jdbcTemplate;
 //	
-
+	@Autowired
 	private JdbcTemplate jdbcTemplate;  
+	
     private JdbcTemplate jdbcTemplate2;  
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;  
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate2;  

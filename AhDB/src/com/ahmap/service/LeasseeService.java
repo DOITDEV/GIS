@@ -15,7 +15,19 @@ public class LeasseeService {
 	
 	public String insertLeassee(LeasseeInfo lea){
 		leasseeDao.addLeassee(lea);
-		return "新增成功！"; 
+		return "{success:true}";
+	}
+	public String insertLeassee2(LeasseeInfo lea){
+		leasseeDao.addLeassee2(lea);
+		return "{success:true}";
+	}
+	public String updateLeassee(LeasseeInfo lea){
+		leasseeDao.updateLeassee(lea);
+		return "{success:true}";
+	}
+	public String deleteLeassee(String id){
+		leasseeDao.deleteLeassee(id);
+		return "success";
 	}
 	public int getCount(){
 		return leasseeDao.getCount();
@@ -25,6 +37,9 @@ public class LeasseeService {
 	}
 	public List<LeasseeInfo> getAllLeassees(String start,String limit){
 		return leasseeDao.getAllLeassee(start, limit);
+	}
+	public List<LeasseeInfo> getAllLeassees(){
+		return leasseeDao.getAllLeassee();
 	}
 	
 }

@@ -2,24 +2,37 @@ package com.ahmap.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.incrementer.PostgreSQLSequenceMaxValueIncrementer;
 import org.springframework.stereotype.Repository;
+
+import com.ahmap.cons.CommonUtils;
 import com.ahmap.domain.LeasRent;
+import com.ahmap.domain.LeasseeInfo;
+import com.ahmap.domain.RentInfo;
 
 
 @Repository
 public class LeasRentDao {
 		
-	private JdbcTemplate jdbcTemplate;  
+		private JdbcTemplate jdbcTemplate;  
 	    private JdbcTemplate jdbcTemplate2;
 	    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;  
 	    private NamedParameterJdbcTemplate namedParameterJdbcTemplate2;
+	    
+	    @Autowired
+	    private PostgreSQLSequenceMaxValueIncrementer incre2;
 	
 	    @Autowired  
 	    @Resource(name="dataSource")  
@@ -52,12 +65,23 @@ public class LeasRentDao {
 			return namedParameterJdbcTemplate2;
 		}  
 		//查询所有数据
+		public List<LeasRent> getAllLeasRentList(String start,String limit){
+			String sql="Select r.id as rentid,r.lanblock as lanblock,r.cityarea as cityarea,r.address as address,r.propertys as propertys,r.propertyno as propertyno,r.landsize as landsize,r.roomsize as roomsize,r.nonocc as nonocc,"
+						+"r.geolocation as geolocation,r.realdisplay as realdisplay,r.isrent as isrent,r.coors_x as coors_x,r.coors_y as coors_y,l.id as leasid,l.leaholder as leaholder,l.cardtype as cardtype,l.idcard as idcard,l.tel as tel,"
+						+"l.timlimit as timlimit,l.startdate as startdate,l.enddate as enddate,l.monrent as monrent,l.yerrent as yerrent,l.wuyefee as wuyefee,l.parkfee as parkfee,l.handsel as handsel,l.penalty as penalty,l.paytype as paytype,"
+						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark,l.dateflag as dateflag "
+						+" from rentinfo r,leasseeinfo l where r.id=l.rentid";
+			sql=sql+" limit "+limit+" offset "+start;
+			return jdbcTemplate.query(sql, new LeasRentMapper());
+		}
+		//查询所有数据
 		public List<LeasRent> getAllLeasRentList(){
 			String sql="Select r.id as rentid,r.lanblock as lanblock,r.cityarea as cityarea,r.address as address,r.propertys as propertys,r.propertyno as propertyno,r.landsize as landsize,r.roomsize as roomsize,r.nonocc as nonocc,"
 						+"r.geolocation as geolocation,r.realdisplay as realdisplay,r.isrent as isrent,r.coors_x as coors_x,r.coors_y as coors_y,l.id as leasid,l.leaholder as leaholder,l.cardtype as cardtype,l.idcard as idcard,l.tel as tel,"
 						+"l.timlimit as timlimit,l.startdate as startdate,l.enddate as enddate,l.monrent as monrent,l.yerrent as yerrent,l.wuyefee as wuyefee,l.parkfee as parkfee,l.handsel as handsel,l.penalty as penalty,l.paytype as paytype,"
-						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark"
-						+"from rentinfo r,leasseeinfo l where r.id=l.rentid";
+						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark,l.dateflag as dateflag "
+						+" from rentinfo r,leasseeinfo l where r.id=l.rentid";
+//					sql=sql+" limit"+limit+" offset "+start;
 			return jdbcTemplate.query(sql, new LeasRentMapper());
 		}
 		//根据条件查询
@@ -65,7 +89,7 @@ public class LeasRentDao {
 			String sql="Select r.id as rentid,r.lanblock as lanblock,r.cityarea as cityarea,r.address as address,r.propertys as propertys,r.propertyno as propertyno,r.landsize as landsize,r.roomsize as roomsize,r.nonocc as nonocc,"
 						+"r.geolocation as geolocation,r.realdisplay as realdisplay,r.isrent as isrent,r.coors_x as coors_x,r.coors_y as coors_y,l.id as leasid,l.leaholder as leaholder,l.cardtype as cardtype,l.idcard as idcard,l.tel as tel,"
 						+"l.timlimit as timlimit,l.startdate as startdate,l.enddate as enddate,l.monrent as monrent,l.yerrent as yerrent,l.wuyefee as wuyefee,l.parkfee as parkfee,l.handsel as handsel,l.penalty as penalty,l.paytype as paytype,"
-						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark"
+						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark,l.dateflag as dateflag"
 						+"from rentinfo r,leasseeinfo l where r.id=l.rentid and l.isvalid='1'";
 			if(!propertys.isEmpty()){
 				sql=sql+" and r.propertys='"+propertys+"'";
@@ -85,7 +109,7 @@ public class LeasRentDao {
 			if(!rentStatus.isEmpty()){
 				sql=sql+" and l.rentstatus='"+rentStatus+"'";
 			}
-			sql=sql+" limit"+limit+" offset "+start;
+			sql=sql+" limit "+limit+" offset "+start;
 			return jdbcTemplate.query(sql, new LeasRentMapper());
 		}
 		//查询历史记录
@@ -94,7 +118,7 @@ public class LeasRentDao {
 			String sql="Select r.id as rentid,r.lanblock as lanblock,r.cityarea as cityarea,r.address as address,r.propertys as propertys,r.propertyno as propertyno,r.landsize as landsize,r.roomsize as roomsize,r.nonocc as nonocc,"
 						+"r.geolocation as geolocation,r.realdisplay as realdisplay,r.isrent as isrent,r.coors_x as coors_x,r.coors_y as coors_y,l.id as leasid,l.leaholder as leaholder,l.cardtype as cardtype,l.idcard as idcard,l.tel as tel,"
 						+"l.timlimit as timlimit,l.startdate as startdate,l.enddate as enddate,l.monrent as monrent,l.yerrent as yerrent,l.wuyefee as wuyefee,l.parkfee as parkfee,l.handsel as handsel,l.penalty as penalty,l.paytype as paytype,"
-						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark"
+						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark,l.dateflag as dateflag"
 						+"from rentinfo r,leasseeinfo l where r.id=l.rentid";
 			if(!propertys.isEmpty()){
 				sql=sql+" and r.propertys='"+propertys+"'";
@@ -114,8 +138,91 @@ public class LeasRentDao {
 			if(!rentStatus.isEmpty()){
 				sql=sql+" and l.rentstatus='"+rentStatus+"'";
 			}
-			sql=sql+" limit"+limit+" offset "+start;
+			sql=sql+" limit "+limit+" offset "+start;
 			return jdbcTemplate.query(sql, new LeasRentMapper());
+		}
+		public void updateLeasRent(List<LeasseeInfo> list){
+			
+		}
+		//
+		public int getCount(){
+			String sql="SELECT COUNT(*) FROM leasseeinfo l,rentinfo r WHERE r.id=l.rentid and l.isvalid='1' and r.isrent='1'";
+			return jdbcTemplate.queryForInt(sql);
+		}
+		//出租已到期纪录
+		public int getOverCount(){
+			String sql="SELECT COUNT(*) FROM leasseeinfo WHERE dateflag='0' AND l.isvalid='1'";
+			return jdbcTemplate.queryForInt(sql);
+		}
+		//未出租纪录
+		public int getNoRentCount(){
+			String sql="SELECT COUNT(*) FROM rentinfo where isrent='0'";
+			return jdbcTemplate.queryForInt(sql);
+		}
+		//1个月内到期纪录
+		public int getOverMonCount(){
+			String sql="SELECT COUNT(*) FROM leasseeinfo WHERE dateflag='1' AND l.isvalid='1'";
+			return jdbcTemplate.queryForInt(sql);
+		}
+		//3个月内到期纪录
+		public int getOver3MonCount(){
+			String sql="SELECT COUNT(*) FROM leasseeinfo WHERE dateflag='3' AND l.isvalid='1'";
+			return jdbcTemplate.queryForInt(sql);
+		}
+		//更新租赁到期天数
+		public void updateLimitDays() throws ParseException{
+			String sql="Select l.id as id,l.enddate as enddate from rentinfo r,leasseeinfo l where r.id=l.rentid and l.isvalid='1' and r.isrent='1'";
+			List<LeasseeInfo> leasList=CommonUtils.getJdbcTemplate1().query(sql, new LeassInfoMapper());
+			if(leasList.size()>0 && leasList!=null){
+				Date now=new Date();
+				String[] sqlList=new String[leasList.size()];
+				for(int i=0;i<leasList.size();i++){
+					if(leasList.get(i).getEndDate()!=null && !"".equals(leasList.get(i).getEndDate())){
+						int days=CommonUtils.getDaysBetweenDate(CommonUtils.convertDateToStr(now),leasList.get(i).getEndDate());
+						String dateFlag=CommonUtils.getDateFlag(days);
+						String sqlStr="UPDATE leasseeinfo SET dateflag='"+dateFlag+"'  where id='"+leasList.get(i).getId()+"'";
+						sqlList[i]=sqlStr;
+					}
+				}
+				CommonUtils.getJdbcTemplate1().batchUpdate(sqlList);
+				System.out.println("dateflag已更新！");
+			}
+		}
+		//批量插入租赁合同记录
+		@SuppressWarnings("unchecked")
+		public void addleaContractMap(Map<String,Object> map){
+			List<RentInfo> rentList=(List<RentInfo>) map.get("rentInfoList");
+			List<LeasseeInfo> leasseeInfoList=(List<LeasseeInfo>) map.get("leasseeInfoList");
+			String[] sqlList=new String[rentList.size()+leasseeInfoList.size()];
+			if(rentList.size()>0){
+				for(int i=0;i<rentList.size();i++){
+					RentInfo rent=rentList.get(i);
+					String sql="INSERT INTO rentinfo(id,lanblock ,cityarea,address,propertys,propertyno,landsize,roomsize,nonocc,geolocation,realdisplay,isrent,coors_x,coors_y,filler1,filler2,filler3)"+ " VALUES('"+rent.getId()+"','"+rent.getLanBlock()+"','"+rent.getCityArea()+"','"+rent.getAddress()+"','"+rent.getPropertys()+"','"+rent.getPropertyNo()+"',"+rent.getLandSize()+","+rent.getRoomSize()+","+rent.getNonOcc()+",'"+rent.getGeoLocation()+"','"+
+							rent.getRealDisplay()+"','"+rent.getIsRent()+"',"+rent.getCoors_x()+","+rent.getCoors_y()+","+rent.getFiller1()+","+rent.getFiller2()+","+rent.getFiller3()+")";
+					sqlList[i]=sql;
+				}
+			}
+			if(leasseeInfoList.size()>0){
+				for(int j=0;j<leasseeInfoList.size();j++){
+					LeasseeInfo lea=leasseeInfoList.get(j);
+					String sqlStr="INSERT INTO leasseeinfo(id,rentid,lanblock,cityarea,address ,leaholder,cardtype,idcard,tel,timlimit,startdate,enddate,monrent,yerrent,wuyefee,parkfee,handsel,penalty,paytype,rentstatus,outdays,incexplain,nextpaydate,createtime,isvalid,remark,filler3,filler4,filler5)"+ " VALUES('"
+					+incre2.nextStringValue()+"','"+lea.getRentId()+"','"+lea.getLanBlock()+"','"+lea.getCityArea()+"','"+lea.getAddress()+"','"+lea.getLeaholder()+"','"+lea.getCardType()+"','"+lea.getIdCard()+"','"+lea.getTel()+"','"+lea.getTimLimit()+"','"+lea.getStartDate()+"','"+lea.getEndDate()+"',"+lea.getMonRent()+","+lea.getYerRent()+","+
+					lea.getWuyeFee()+","+lea.getParkFee()+","+lea.getHandsel()+","+lea.getPenalty()+",'"+lea.getPayType()+"','"+lea.getRentStatus()+"','"+lea.getOutDays()+"','"+lea.getIncExplain()+"','"+lea.getNextPayDate()+"','"+lea.getCreateTime()+"','"+lea.getIsValid()+"','"+lea.getRemark()+"',"+lea.getFiller3()+","+lea.getFiller4()+","+lea.getFiller5()+")";
+					sqlList[j+rentList.size()]=sqlStr;
+				}
+			}
+			jdbcTemplate.batchUpdate(sqlList);
+		}
+		private static final class LeassInfoMapper implements RowMapper<LeasseeInfo>{
+			@Override
+			public LeasseeInfo mapRow(ResultSet rs, int rowNum)
+					throws SQLException {
+				LeasseeInfo lr=new LeasseeInfo();
+				lr.setId(rs.getString("id"));
+				lr.setEndDate(rs.getString("enddate"));
+//				lr.setDateFlag(rs.getString("dateflag"));
+				return lr;
+			}
 		}
 		private static final class LeasRentMapper implements RowMapper<LeasRent>{
 			@Override
@@ -123,7 +230,7 @@ public class LeasRentDao {
 					throws SQLException {
 				LeasRent lr=new LeasRent();
 				lr.setRentId(rs.getString("rentid"));
-				lr.setLanBlock(rs.getString("landblock"));
+				lr.setLanBlock(rs.getString("lanblock"));
 				lr.setCityArea(rs.getString("cityarea"));
 				lr.setAddress(rs.getString("address"));
 				lr.setPropertys(rs.getString("propertys"));
@@ -142,8 +249,14 @@ public class LeasRentDao {
 				lr.setIdCard(rs.getString("idcard"));
 				lr.setTel(rs.getString("tel"));
 				lr.setTimLimit(rs.getString("timlimit"));
-				lr.setStartDate(rs.getString("startdate"));
-				lr.setEndDate(rs.getString("enddate"));
+				String startDate=rs.getString("startdate");
+				if(!CommonUtils.isEmpty(startDate)){
+					lr.setStartDate(startDate);
+				}
+				String enddate=rs.getString("enddate");
+				if(!CommonUtils.isEmpty(enddate)){
+					lr.setEndDate(enddate);
+				}
 				lr.setMonRent(rs.getDouble("monrent"));
 				lr.setYerRent(rs.getDouble("yerrent"));
 				lr.setWuyeFee(rs.getDouble("wuyefee"));

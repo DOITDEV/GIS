@@ -14,18 +14,21 @@ public class RentService {
 	
 	public String insertRent(RentInfo rent){
 		rentDao.addRent(rent);
-		return "新增成功！"; 
+		return "success"; 
 	}
-	public String deleteRent(RentInfo rent){
-		rentDao.deleteRent(rent);
+	public String deleteRent(String id){
+		rentDao.deleteRent(id);
 		return "success";
 	}
 	public String updateRent(RentInfo rent){
 		rentDao.updateRent(rent);
-		return "修改成功！";
+		return "success";
 	}
 	public List<RentInfo> getAllRents(String start, String limit){
 		return rentDao.getAllRents(start, limit);
+	}
+	public int getCount(){
+		return rentDao.getCount();
 	}
 	//根据城区统计出租信息
 	public List<RentInfo> getAllRentByArea(String cityArea,String start,String limit){

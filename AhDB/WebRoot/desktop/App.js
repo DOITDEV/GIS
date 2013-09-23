@@ -7,12 +7,9 @@
 
 Ext.define('MyDesktop.App', {
     extend: 'Ext.ux.desktop.App',
-
     requires: [
         'Ext.window.MessageBox',
-
         'Ext.ux.desktop.ShortcutModel',
-
         'MyDesktop.SystemStatus',
         'MyDesktop.VideoWindow',
         'MyDesktop.GridWindow',
@@ -21,9 +18,9 @@ Ext.define('MyDesktop.App', {
         'MyDesktop.Map',
         'MyDesktop.BogusMenuModule',
         'MyDesktop.BogusModule',
-
-//        'MyDesktop.Blockalanche',
-        'MyDesktop.Settings'
+        'MyDesktop.rentinfo.Rent',
+        'MyDesktop.Settings',
+        'MyDesktop.leas.LesseeGridWindow'
     ],
 
     init: function() {
@@ -45,7 +42,9 @@ Ext.define('MyDesktop.App', {
             new MyDesktop.AccordionWindow(),
             new MyDesktop.Map(),
             new MyDesktop.BogusMenuModule(),
-            new MyDesktop.BogusModule()
+            new MyDesktop.BogusModule(),
+            new MyDesktop.rentinfo.Rent(),
+            new MyDesktop.leas.LesseeGridWindow()
         ];
     },
 
@@ -65,10 +64,10 @@ Ext.define('MyDesktop.App', {
                     { name: '租赁信息', iconCls: 'grid-shortcut', module: 'grid-win' },
                     { name: '用户管理', iconCls: 'accordion-shortcut', module: 'acc-win' },
                     { name: 'Map', iconCls: 'map-shortcut', module: 'map' },
-                    { name: '出租方', iconCls: 'accordion-shortcut', module: 'acc-win' },
-                    { name: '承租方', iconCls: 'accordion-shortcut', module: 'acc-win' },
-                    { name: '支付信息', iconCls: 'accordion-shortcut', module: 'acc-win' },
-                    { name: '第三方信息', iconCls: 'accordion-shortcut', module: 'acc-win' },
+                    { name: '出租方', iconCls: 'rent-shortcut', module: 'grid-win-rent' },
+                    { name: '承租方', iconCls: 'leas-shortcut', module: 'lessee-win' },
+                    { name: '支付信息', iconCls: 'pay-shortcut', module: 'acc-win' },
+                    { name: '第三方信息', iconCls: 'thirdrent-shortcut', module: 'acc-win' },
                     { name: 'System Status', iconCls: 'cpu-shortcut', module: 'systemstatus'}
                 ]
             }),

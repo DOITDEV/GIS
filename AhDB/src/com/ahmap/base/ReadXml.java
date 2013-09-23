@@ -18,7 +18,7 @@ import org.jdom.output.XMLOutputter;
 import org.xml.sax.SAXException;
 import com.ahmap.domain.BaseConfig;
 import com.ahmap.domain.Hospital;
-import com.ahmap.domain.LeaContract;
+import com.ahmap.domain.LeasRent;
 import com.ahmap.domain.MapServer;
 
 
@@ -454,7 +454,7 @@ public class ReadXml {
 	 * 
 	 * @return
 	 */
-	public static LeaContract getLeacConfig(){
+	public static LeasRent getLeacConfig(){
 		SAXBuilder sb = new SAXBuilder();
 		try
 		{
@@ -467,7 +467,7 @@ public class ReadXml {
 //			System.out.println("--------------address:"+root.getChild("address").getText());
 //			System.out.println("--------------lever:"+root.getChild("lever").getText());
 			
-			LeaContract lea = new LeaContract();
+			LeasRent lea = new LeasRent();
 			String lanBlock = root.getChild("lanBlock").getText();
 			String codNum = root.getChild("codNum").getText();
 			String address = root.getChild("address").getText();
@@ -499,7 +499,6 @@ public class ReadXml {
 			String coors_y = root.getChild("coors_y").getText();
 			
 			lea.setLanBlock(lanBlock);
-			lea.setCodNum(codNum);
 			lea.setAddress(address);
 			lea.setRoomSize(Double.valueOf(roomSize));
 			lea.setNonOcc(Double.valueOf(nonOcc));
@@ -515,16 +514,12 @@ public class ReadXml {
 			lea.setHandsel(Double.valueOf(handsel));
 			lea.setPenalty(Double.valueOf(penalty));
 			lea.setTel(tel);
-			lea.setLinker(linker);
 			lea.setIncExplain(incExplain);
 			lea.setRemark(remark);
 			lea.setNextPayDate(nextPayDate);
 			lea.setIdCard(idCard);
-			lea.setBusLicense(busLicense);
-			lea.setOrgCode(orgCode);
 			lea.setRentStatus(rentStatus);
 			lea.setOutDays(outDays);
-			lea.setHoldType(holdType);	
 			lea.setCoors_x(Double.valueOf(coors_x));
 			lea.setCoors_y(Double.valueOf(coors_y));
 			return lea;
@@ -540,7 +535,7 @@ public class ReadXml {
 	 * @param base
 	 * @return
 	 */
-	public static String setLeacConfig(LeaContract lea){
+	public static String setLeacConfig(LeasRent lea){
 		SAXBuilder sb = new SAXBuilder();
 		try
 		{
@@ -581,7 +576,6 @@ public class ReadXml {
 			Element lanBlock = new Element("lanBlock");
 			lanBlock.setText(lea.getLanBlock());
 			Element codNum = new Element("codNum");
-			codNum.setText(lea.getCodNum());
 			Element address = new Element("address");
 			address.setText(lea.getAddress());
 			Element roomSize = new Element("roomSize");
@@ -613,7 +607,6 @@ public class ReadXml {
 			Element tel = new Element("tel");
 			tel.setText(lea.getTel());
 			Element linker = new Element("linker");
-			linker.setText(lea.getLinker());
 			Element incExplain = new Element("incExplain");
 			incExplain.setText(lea.getIncExplain());
 			Element remark = new Element("remark");
@@ -623,15 +616,12 @@ public class ReadXml {
 			Element idCard = new Element("idCard");
 			idCard.setText(lea.getIdCard());
 			Element busLicense = new Element("busLicense");
-			busLicense.setText(lea.getBusLicense());
 			Element orgCode = new Element("orgCode");
-			orgCode.setText(lea.getOrgCode());
 			Element rentStatus = new Element("rentStatus");
 			rentStatus.setText(lea.getRentStatus());
 			Element outDays = new Element("outDays");
 			outDays.setText(lea.getOutDays());
 			Element holdType = new Element("holdType");
-			holdType.setText(lea.getHoldType());
 			
 			Element coors_x = new Element("coors_x");
 			coors_x.setText(String.valueOf(lea.getCoors_x()));

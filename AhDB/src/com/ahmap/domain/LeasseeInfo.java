@@ -1,6 +1,5 @@
 package com.ahmap.domain;
 
-import java.util.Date;
 
 public class LeasseeInfo {
 	//承租方信息
@@ -31,6 +30,7 @@ public class LeasseeInfo {
 	private String isValid;//是否生效
 	private RentInfo rentInfo;
 	private String remark;//备注
+	private String dateFlag;//距离租赁到期时间(0 已到期,1 一个月内到期,3 三个月内到期,9距离到期时间超过三个月)
 	private String filler3;
 	private double filler4;
 	private String filler5;
@@ -217,6 +217,12 @@ public class LeasseeInfo {
 	}
 	public void setFiller5(String filler5) {
 		this.filler5 = filler5;
+	}
+	public String getDateFlag() {
+		return dateFlag;
+	}
+	public void setDateFlag(String dateFlag) {
+		this.dateFlag = dateFlag;
 	}
 	
 }

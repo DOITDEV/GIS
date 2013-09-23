@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ahmap.base.ReadXml;
 import com.ahmap.cons.CommonConstant;
-import com.ahmap.domain.BaseConfig;
 import com.ahmap.domain.Hospital;
-import com.ahmap.domain.LeaContract;
+import com.ahmap.domain.LeasRent;
 import com.ahmap.domain.User;
 
 	@Controller
@@ -66,15 +65,15 @@ import com.ahmap.domain.User;
 		} 
 		//flzhao
 		@RequestMapping("/getLeaConConfig")
-		public @ResponseBody LeaContract getLeaConConfig(){   
-			LeaContract lea = ReadXml.getLeacConfig();
+		public @ResponseBody LeasRent getLeaConConfig(){   
+			LeasRent lea = ReadXml.getLeacConfig();
 			return lea;
 		} 
 		 
 		@RequestMapping("/setLeaConConfig")
-		public @ResponseBody String setLeaConConfig(HttpEntity<LeaContract> lea) 
+		public @ResponseBody String setLeaConConfig(HttpEntity<LeasRent> lea) 
 		{
-			return ReadXml.setLeacConfig((LeaContract) lea.getBody());
+			return ReadXml.setLeacConfig((LeasRent) lea.getBody());
 		} 
 		
 }

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>ExtTop - Desktop Sample App</title>
+<title>上海牛奶集团GIS管理系统</title>
 
     <link rel="stylesheet" type="text/css" href="css/desktop.css" />
 

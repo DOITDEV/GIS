@@ -22,15 +22,15 @@ Ext.define('MyDesktop.VideoWindow', {
 
     init : function(){
         this.launcher = {
-            text: 'About Ext JS',
+            text: '支付信息',
             iconCls:'video'
         };
     },
 
     createWindow : function(){
-        var me = this, desktop = me.app.getDesktop(),
+       /* var me = this, desktop = me.app.getDesktop(),
             win = desktop.getWindow(me.windowId);
-
+*/
         if (!win) {
             win = desktop.createWindow({
                 id: me.windowId,

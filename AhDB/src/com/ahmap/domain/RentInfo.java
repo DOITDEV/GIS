@@ -14,6 +14,7 @@ public class RentInfo {
 	private String geoLocation;//地理位置
 	private String realDisplay;//实景
 	private String isRent;//是否已租
+	private String isRentName;//是否已租
 	private double coors_x;
 	private double coors_y;
 	private String filler1;
@@ -121,6 +122,12 @@ public class RentInfo {
 	}
 	public void setCoors_y(double coors_y) {
 		this.coors_y = coors_y;
+	}
+	public String getIsRentName() {
+		return isRentName;
+	}
+	public void setIsRentName(String isRentName) {
+		this.isRentName = isRentName;
 	}
 	
 }

@@ -200,6 +200,20 @@ div.ux-taskbar div.x-toolbar {
     background-image: url(../images/statusLarge.png);
 }
 
+.rent-shortcut {
+    background-image: url(../images/rent.png);
+}
+.leas-shortcut {
+    background-image: url(../images/leassee.png);
+}
+
+.thirdrent-shortcut {
+    background-image: url(../images/disanfang.png);
+}
+.pay-shortcut {
+    background-image: url(../images/pay.png);
+}
+
 .grid-shortcut {
     background-image: url(../images/grid48x48.png);
 }

@@ -2,17 +2,15 @@ package com.ahmap.web;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -24,18 +22,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.incrementer.PostgreSQLSequenceMaxValueIncrementer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.ahmap.cons.CommonConstant;
 import com.ahmap.cons.CommonUtils;
-import com.ahmap.domain.LeaContract;
 import com.ahmap.domain.LeasRent;
 import com.ahmap.domain.LeasseeInfo;
 import com.ahmap.domain.RentInfo;
-import com.ahmap.service.LeaContractService;
 import com.ahmap.service.LeasRentService;
 import com.ahmap.service.LeasseeService;
 import com.ahmap.service.RentService;
@@ -43,8 +39,7 @@ import com.ahmap.service.RentService;
 @Controller
 @RequestMapping("/imp")
 public class ImportExcelController {
-	@Autowired
-	private LeaContractService leaConService;
+	
 	
 	@Autowired
 	private LeasRentService leasRentService;
@@ -71,7 +66,8 @@ public class ImportExcelController {
 		}
 		if(!map.isEmpty()){
 //			System.out.println("导入数据条数： "+leaConList.size());
-			resultStr=leaConService.insertLeaContMap(map);
+//			resultStr=leaConService.insertLeaContMap(map);
+			resultStr=leasRentService.insertLeaContMap(map);
 			System.out.println("返回String: "+resultStr);
 		}
 		
@@ -133,7 +129,7 @@ public class ImportExcelController {
 					pos++;
 					rent.setRealDisplay(row1.getCell(pos).getStringCellValue());
 					pos++;
-					rent.setIsRent("0");
+					rent.setIsRent(CommonConstant.ISVALID);
 					rentInfoList.add(rent);
 					//读取承租方信息
 //					String leasseeId=incre.nextStringValue();
@@ -151,7 +147,7 @@ public class ImportExcelController {
 					try {
 						lea.setTel(row1.getCell(pos).getStringCellValue());
 					} catch (IllegalStateException e) {
-						double tel=row1.getCell(pos).getNumericCellValue();
+						BigDecimal tel=new BigDecimal(row.getCell(pos).getNumericCellValue()).abs();
 						lea.setTel(String.valueOf(tel));
 					}
 					lea.setTimLimit(row1.getCell(pos).getStringCellValue());
@@ -222,7 +218,7 @@ public class ImportExcelController {
 				pos++;
 				rent.setRealDisplay(row.getCell(pos).getStringCellValue());
 				pos++;
-				rent.setIsRent("0");
+				rent.setIsRent(CommonConstant.ISVALID);
 				rentInfoList.add(rent);
 				//读取承租方信息
 //				String leasseeId=incre.nextStringValue();
@@ -240,7 +236,7 @@ public class ImportExcelController {
 				try {
 					lea.setTel(row.getCell(pos).getStringCellValue());
 				} catch (IllegalStateException e) {
-					double tel=row.getCell(pos).getNumericCellValue();
+					BigDecimal tel=new BigDecimal(row.getCell(pos).getNumericCellValue()).abs();
 					lea.setTel(String.valueOf(tel));
 				}
 				pos++;
@@ -279,6 +275,8 @@ public class ImportExcelController {
 				pos++;
 				lea.setRemark(row.getCell(pos).getStringCellValue());
 				lea.setCreateTime(CommonUtils.convertDateToStr(new Date()));
+				lea.setIsValid(CommonConstant.ISVALID);
+//				lea.setCreateTime(CommonUtils.getSysDate());
 				leasseeInfoList.add(lea);
 				i++;
 			}
@@ -345,11 +343,11 @@ public class ImportExcelController {
 					pos++;
 					rent.setRealDisplay(row1.getCell(pos).getStringCellValue());
 					pos++;
-					rent.setIsRent("0");
+					rent.setIsRent(CommonConstant.ISVALID);
 					rentInfoList.add(rent);
 					//读取承租方信息
-//					String leasseeId=incre.nextStringValue();
-//					lea.setId(leasseeId);
+	//				String leasseeId=incre.nextStringValue();
+	//				lea.setId(leasseeId);
 					lea.setRentId(rentId);
 					lea.setLanBlock(lanBlock);
 					lea.setCityArea(cityArea);
@@ -363,7 +361,7 @@ public class ImportExcelController {
 					try {
 						lea.setTel(row1.getCell(pos).getStringCellValue());
 					} catch (IllegalStateException e) {
-						double tel=row1.getCell(pos).getNumericCellValue();
+						BigDecimal tel=new BigDecimal(row.getCell(pos).getNumericCellValue()).abs();
 						lea.setTel(String.valueOf(tel));
 					}
 					lea.setTimLimit(row1.getCell(pos).getStringCellValue());
@@ -400,6 +398,7 @@ public class ImportExcelController {
 					pos++;
 					lea.setRemark(row1.getCell(pos).getStringCellValue());
 					lea.setCreateTime(CommonUtils.convertDateToStr(new Date()));
+					lea.setIsValid(CommonConstant.ISVALID);
 					leasseeInfoList.add(lea);
 				}
 				i=(i+mergedCellRows);
@@ -433,11 +432,11 @@ public class ImportExcelController {
 				pos++;
 				rent.setRealDisplay(row.getCell(pos).getStringCellValue());
 				pos++;
-				rent.setIsRent("0");
+				rent.setIsRent(CommonConstant.ISVALID);
 				rentInfoList.add(rent);
 				//读取承租方信息
-//				String leasseeId=incre.nextStringValue();
-//				lea.setId(leasseeId);
+	//			String leasseeId=incre.nextStringValue();
+	//			lea.setId(leasseeId);
 				lea.setRentId(rentId);
 				lea.setLanBlock(landBlock);
 				lea.setCityArea(cityArea);
@@ -451,7 +450,7 @@ public class ImportExcelController {
 				try {
 					lea.setTel(row.getCell(pos).getStringCellValue());
 				} catch (IllegalStateException e) {
-					double tel=row.getCell(pos).getNumericCellValue();
+					BigDecimal tel=new BigDecimal(row.getCell(pos).getNumericCellValue()).abs();
 					lea.setTel(String.valueOf(tel));
 				}
 				pos++;
@@ -459,7 +458,7 @@ public class ImportExcelController {
 				pos++;
 				Date startDate=row.getCell(pos).getDateCellValue();
 				if(startDate!=null && !"".equals(startDate)){
-//					SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
+	//				SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd");
 					lea.setStartDate(CommonUtils.convertDateToStr(startDate));
 				}
 				pos++;
@@ -490,10 +489,14 @@ public class ImportExcelController {
 				pos++;
 				lea.setRemark(row.getCell(pos).getStringCellValue());
 				lea.setCreateTime(CommonUtils.convertDateToStr(new Date()));
+				lea.setIsValid(CommonConstant.ISVALID);
+	//			lea.setCreateTime(CommonUtils.getSysDate());
 				leasseeInfoList.add(lea);
 				i++;
 			}
 		}
+		System.out.println("出租记录数："+rentInfoList.size());
+		System.out.println("承租记录数："+leasseeInfoList.size());
 		map.put("leasseeInfoList", leasseeInfoList);
 		map.put("rentInfoList", rentInfoList);
 		return map;
