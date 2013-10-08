@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ahmap.base.ResultModel;
 import com.ahmap.cons.CommonUtils;
 import com.ahmap.domain.RentInfo;
 import com.ahmap.domain.ThirdRent;
@@ -67,13 +68,17 @@ public class RentInfoController {
 	 * @throws FileNotFoundException 
 	 */
 	@RequestMapping("/updateRent")
-	public @ResponseBody String updateRent(RentInfo requestEntity) throws FileNotFoundException, IOException
+	public @ResponseBody ResultModel updateRent(RentInfo requestEntity) throws FileNotFoundException, IOException
 	{
 		RentInfo rent = requestEntity;
 		if(!CommonUtils.isEmpty(rent.getId())){
-			return rentService.updateRent(rent);
+			rentService.updateRent(rent);
+			
+			return ResultModel.getResult(0, null, null);
 		}else{
-			return insertLeaRent(rent);
+			insertLeaRent(rent);
+			
+			return ResultModel.getResult(0, null, null);
 		}
 //		return "{success:true,msg:'test'}";
 	}

@@ -1,56 +1,95 @@
 Ext.define("MyDesktop.rentinfo.RentTrigger", {
 			extend : "Ext.form.field.ComboBox",
 			alias : 'widget.renttrigger',
-			initList : function() {
-				Ext.create('Ext.data.Store', {
-							storeId : 'simpsonsStore',
-							fields : ['name', 'email', 'phone'],
-							data : {
-								'items' : [{
-											'name' : 'Lisa',
-											"email" : "lisa@simpsons.com",
-											"phone" : "555-111-1224"
-										}, {
-											'name' : 'Bart',
-											"email" : "bart@simpsons.com",
-											"phone" : "555-222-1234"
-										}, {
-											'name' : 'Homer',
-											"email" : "home@simpsons.com",
-											"phone" : "555-222-1244"
-										}, {
-											'name' : 'Marge',
-											"email" : "marge@simpsons.com",
-											"phone" : "555-222-1254"
-										}]
-							},
+
+			matchFieldWidth : false,
+
+			createPicker : function() {
+				var me = Ext.apply(this,arguments[0]);
+				
+				var rentstore = new Ext.data.JsonStore({
+							autoLoad : true,
+							fields : [{
+										name : 'lanBlock'
+									}, {
+										name : 'cityArea'
+									}, {
+										name : 'address'
+									}, {
+										name : 'propertys'
+									}, {
+										name : 'propertyNo'
+									}, {
+										name : 'landSize'
+									}, {
+										name : 'roomSize'
+									}, {
+										name : 'nonOcc'
+									}, {
+										name : 'geoLocation'
+									}, {
+										name : 'realDisplay'
+									}, {
+										name : 'isRent'
+									}, {
+										name : 'isRentName'
+									}, {
+										name : 'id'
+									}, {
+										name : 'coors_x'
+									}, {
+										name : 'coors_y'
+									}],
+							// 设置分页大小
+							pageSize : 15,
 							proxy : {
-								type : 'memory',
+								type : 'ajax',
+								url : '../rent/getAllRents.html',
 								reader : {
+									// 数据格式为json
 									type : 'json',
-									root : 'items'
+									root : 'rent',
+									// 获取数据总数
+									totalProperty : 'totalCount'
 								}
 							}
 						});
 
-				this.list = Ext.create('Ext.grid.Panel', {
-							title : 'Simpsons',
-							autoRender : true,
-							store : Ext.data.StoreManager
-									.lookup('simpsonsStore'),
+				this.picker = Ext.create('Ext.grid.Panel', {
+							floating : true,
+							store : rentstore,
 							columns : [{
-										text : 'Name',
-										dataIndex : 'name'
+										text : "地块",
+										sortable : true,
+										dataIndex : 'lanBlock'
 									}, {
-										text : 'Email',
-										dataIndex : 'email',
-										flex : 1
+										text : "所在区域",
+										sortable : true,
+										dataIndex : 'cityArea'
 									}, {
-										text : 'Phone',
-										dataIndex : 'phone'
+										text : "租赁地址",
+										sortable : true,
+										dataIndex : 'address'
+									}, {
+										text : "房屋面积",
+										sortable : true,
+										dataIndex : 'roomSize'
+									}, {
+										text : "空置面积",
+										sortable : true,
+										dataIndex : 'nonOcc'
 									}],
-							height : 200,
-							width : 400
+							minHeight : 200,
+							width : 505
 						});
-			}
+
+				this.mon(this.picker.getView(), {
+							itemdblclick : me.onItemdblclick,
+							scope : me
+						});
+
+				return this.picker;
+			},
+			
+			onItemdblclick : Ext.emptyFn
 		});

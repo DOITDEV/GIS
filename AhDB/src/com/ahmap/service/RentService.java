@@ -3,6 +3,8 @@ package com.ahmap.service;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ahmap.base.ResultModel;
 import com.ahmap.dao.RentDao;
 import com.ahmap.domain.RentInfo;
 
@@ -14,7 +16,7 @@ public class RentService {
 	
 	public String insertRent(RentInfo rent){
 		rentDao.addRent(rent);
-		return "success"; 
+		return "{success:true,msg:'保存成功!'}"; 
 	}
 	public String deleteRent(String id){
 		rentDao.deleteRent(id);
