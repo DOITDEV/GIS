@@ -1,7 +1,10 @@
 package com.ahmap.domain;
 
+import java.io.Serializable;
 
-public class LeasseeInfo {
+
+@SuppressWarnings("serial")
+public class LeasseeInfo implements Serializable{
 	//承租方信息
 	private String id;
 	private String rentId;
@@ -27,7 +30,7 @@ public class LeasseeInfo {
 	private String incExplain;//租金调整说明
 	private String nextPayDate;//下次缴费日期
 	private String createTime;//创建时间
-	private String isValid;//是否生效
+	private String isValid;//是否生效(0 表示已过期的历史租赁信息，1 表示当前有效的租赁信息)
 	private RentInfo rentInfo;
 	private String remark;//备注
 	private String dateFlag;//距离租赁到期时间(0 已到期,1 一个月内到期,3 三个月内到期,9距离到期时间超过三个月)

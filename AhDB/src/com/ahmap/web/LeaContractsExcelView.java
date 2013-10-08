@@ -15,7 +15,7 @@ public class LeaContractsExcelView extends AbstractExcelView{
 		protected void buildExcelDocument(Map<String, Object> model,
 				HSSFWorkbook workbook, HttpServletRequest request, HttpServletResponse response)
 				throws Exception {
-			response.setHeader("Content-Disposition", "attachment;filename="+new String("租赁合同一览表.xls".getBytes(),"iso8859-1"));
+			response.setHeader("Content-Disposition", "attachment;filename="+new String("承租信息表.xls".getBytes(),"iso8859-1"));
 			List<LeasRent> list = (List<LeasRent>) model.get("leasRentList");
 			HSSFSheet sheet=workbook.createSheet("sheet1");
 			HSSFRow header=sheet.createRow(0);

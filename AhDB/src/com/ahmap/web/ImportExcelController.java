@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.support.incrementer.PostgreSQLSequenceMaxValueIncrementer;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,8 +32,6 @@ import com.ahmap.domain.LeasRent;
 import com.ahmap.domain.LeasseeInfo;
 import com.ahmap.domain.RentInfo;
 import com.ahmap.service.LeasRentService;
-import com.ahmap.service.LeasseeService;
-import com.ahmap.service.RentService;
 
 @Controller
 @RequestMapping("/imp")

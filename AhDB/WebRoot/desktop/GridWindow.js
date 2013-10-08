@@ -119,7 +119,7 @@ Ext.define('MyDesktop.GridWindow', {
 				 });
             win = desktop.createWindow({
                 id: 'grid-win',
-                title:'Grid Window',
+                title:'租赁信息',
                 width:740,
                 height:480,
                 iconCls: 'icon-grid',

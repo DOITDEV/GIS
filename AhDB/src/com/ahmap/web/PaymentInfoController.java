@@ -19,8 +19,8 @@ public class PaymentInfoController {
 	
 	//插入收款纪录
 	@RequestMapping("/addPay")
-	public @ResponseBody String insertPay(HttpEntity<PaymentInfo> requestEntity){
-		PaymentInfo pay=requestEntity.getBody();
+	public @ResponseBody String insertPay(PaymentInfo requestEntity){
+		PaymentInfo pay=requestEntity;
 		return payService.insertPay(pay);
 	}
 	//查询收款纪录
@@ -34,7 +34,7 @@ public class PaymentInfoController {
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		List<PaymentInfo> payList=payService.getAllPays(start, limit);
 		map.put("totalCount",payService.getCount());
-		map.put("hos", payList);
+		map.put("pay", payList);
 		return map;
 	}
 }

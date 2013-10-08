@@ -3,81 +3,57 @@
  * http://www.sencha.com/license
  */
 
-Ext.define('MyDesktop.rentinfo.Rent', {
+Ext.define('MyDesktop.user.UserWindow', {
 	extend : 'Ext.ux.desktop.Module',
-	requires : ['Ext.data.*', 'Ext.util.Format', 'Ext.grid.Panel',
+	requires : ['Ext.data.ArrayStore', 'Ext.util.Format', 'Ext.grid.Panel',
 			'Ext.grid.RowNumberer', 'Ext.from.*'],
 
-	id : 'grid-win-rent',
+	id : 'user-win',
 
 	init : function() {
 		this.launcher = {
-			text : '出租方信息',
+			text : '用户信息',
 			iconCls : 'icon-grid'
 		};
 	},
 
 	createWindow : function() {
 		var desktop = this.app.getDesktop();
-		var win = desktop.getWindow('grid-win-rent');
+		var win = desktop.getWindow('user-win');
 		if (!win) {
 
-			var rentstore = new Ext.data.JsonStore({
+			var store = new Ext.data.JsonStore({
 						autoLoad : true,
-//						proxy : {
-//							type : 'ajax',
-//							api : {
-//								create : '/AhDB/rent/addRent.html',
-//								read : '/AhDB/rent/getAllRents.html',
-//								update : '/AhDB/rent/updateRent.html',
-//								destroy : '/AhDB/rent/deleteRent.html'
-//							},
-//							reader : {
-//								type : 'json',
-//								root : 'rent',
-//								idProperty : 'id'
-//							}
-//						},
 						fields : [{
-									name : 'lanBlock'
+									name : 'userName'
+								}, 
+								{
+									name : 'password'
+								}, 
+									{
+									name : 'userType'
 								}, {
-									name : 'cityArea'
+									name : 'email'
 								}, {
-									name : 'address'
+									name : 'departId'
 								}, {
-									name : 'propertys'
+									name : 'roleId'
 								}, {
-									name : 'propertyNo'
+									name : 'roleName'
 								}, {
-									name : 'landSize'
-								}, {
-									name : 'roomSize'
-								}, {
-									name : 'nonOcc'
-								}, {
-									name : 'geoLocation'
-								}, {
-									name : 'realDisplay'
-								}, {
-									name : 'isRent'
-								}, {
-									name : 'isRentName'
+									name : 'createTime'
 								}, {
 									name : 'id'
-								}, {
-									name : 'coors_x'
-								}, {
-									name : 'coors_y'
 								}],
-								//设置分页大小  
+							    //设置分页大小  
 							    pageSize:15,  
 							    proxy: {  
 							        type: 'ajax',  
-							        url: '../rent/getAllRents.html',
+							        url: '../user/getAllUser.html',
 							        reader: {  
 							            //数据格式为json  
 							            type: 'json',  
-							            root: 'rent',  
+							            root: 'user',  
 							            //获取数据总数  
 							            totalProperty: 'totalCount'  
 							        }  
@@ -87,14 +63,56 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 				      emptyMsg:"没有数据",
 				      displayInfo:true,
 				      displayMsg:"显示从{0}条数据到{1}条数据，共{2}条数据",
-				      store:rentstore
+				      store:store
 				      //pageSize:10 
 				 	});
+			var deptstore=[[11,'市场部'],[22,'财务部'],[33,'安全部'],[44,'管理部'],[55,'人事部'],[66,'销售部']];
+			var rolestore=[[1001,'管理员'],[2001,'出纳员'],[2002,'审计员'],[3001,'网管'],[4001,'总经理'],[4002,'运营总监'],[4003,'财务经理'],[5001,'HR经理'],[6001,'销售专员']];
+			/*var combodept=new Ext.form.ComboBox({
+					store:new Ext.data.SimpleStore({
+						fields:['deptId','deptName'],
+						data:deptstore
+					}),
+					valueField :"deptId",  
+		            displayField: "deptName",  
+		            mode: 'local',  
+		            forceSelection: true,  
+		            blankText:'请选择部门',  
+		            emptyText:'请选择部门',  
+		            hiddenName:'deptId',  
+		            editable: false,  
+		            triggerAction: 'all',  
+		            allowBlank:true,  
+		            fieldLabel: '部 &nbsp;&nbsp;&nbsp; 门',  
+		            name: 'deptId',  
+		            width: 80   
+			});
+			
+			var comborole=new Ext.form.ComboBox({
+					store:new Ext.data.SimpleStore({
+						fields:['roleId','roleName'],
+						data:rolestore
+					}),
+					valueField :"roleId",  
+		            displayField: "roleName",  
+		            mode: 'local',  
+		            forceSelection: true,  
+		            blankText:'请选择角色',  
+		            emptyText:'请选择角色',  
+		            hiddenName:'roleId',  
+		            editable: false,  
+		            triggerAction: 'all',  
+		            allowBlank:true,  
+		            fieldLabel: '角 &nbsp;&nbsp;&nbsp; 色',  
+		            name: 'roleId',  
+		            width: 80   
+			});*/
+			
 			win = desktop.createWindow({
-				id : 'grid-win-rent',
-				title : '出租方',
-				width : 800,
-				height : 580,
+				id : 'user-win',
+				title : '系统用户',
+				width : 780,
+				height : 500,
 				iconCls : 'icon-grid',
 				animCollapse : false,
 				constrainHeader : true,
@@ -104,68 +122,43 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 					border : false,
 					xtype : 'grid',
 					bbar:pagingToolbar,
-					store : rentstore,
-					columns : [new Ext.grid.RowNumberer(), {
-								text : "地块",
+					store : store,
+					columns : [new Ext.grid.RowNumberer(), 
+							{
+								text : "用户名",
 								width : 70,
 								sortable : true,
-								dataIndex : 'lanBlock'
+								dataIndex : 'userName'
+							}, 
+								/*{
+								text : "密码",
+								width : 70,
+								sortable : true,
+								dataIndex : 'password'
+							}, */
+								{
+								text : "用户类型",
+								width : 70,
+								sortable : true,
+								dataIndex : 'userType'
 							}, {
-								text : "所在区域",
+								text : "E-mail",
 								width : 70,
 								sortable : true,
-								dataIndex : 'cityArea'
+								dataIndex : 'email'
 							}, {
-								text : "租赁地址",
+								text : "所属部门",
 								width : 70,
 								sortable : true,
-								dataIndex : 'address'
+								dataIndex : 'departId'
 							}, {
-								text : "产权",
+								text : "角色名称",
 								width : 70,
 								sortable : true,
-								dataIndex : 'propertys'
-							}, {
-								text : "产权证号",
-								width : 70,
-								sortable : true,
-								dataIndex : 'propertyNo'
-							}, {
-								text : "土地面积",
-								width : 70,
-								sortable : true,
-								dataIndex : 'landSize'
-							}, {
-								text : "房屋面积",
-								width : 70,
-								sortable : true,
-								dataIndex : 'roomSize'
-							}, {
-								text : "空置面积",
-								width : 70,
-								sortable : true,
-								dataIndex : 'nonOcc'
-							}, {
-								text : "地理位置",
-								width : 70,
-								sortable : true,
-								dataIndex : 'geoLocation'
-							}, {
-								text : "实景",
-								width : 70,
-								sortable : true,
-								dataIndex : 'realDisplay'
-							}, {
-								text : "是否出租",
-								width : 70,
-								sortable : true,
-								dataIndex : 'isRentName'
+								dataIndex : 'roleId'
 							}],
 					listeners : {
 						itemdblclick : function(g, rec) {
-							/*var map_win = win.getMap();
-                        		map_win.deleteOverlays();
-                        		map_win.codeAddress('上海市'+rec.data.address,rec);*/
 							if (!g.ownerCt.nextSibling().isHidden()) {
 								g.ownerCt.nextSibling().getForm()
 										.loadRecord(rec);
@@ -187,50 +180,54 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 						type : 'table',
 						columns : 3
 					},
-					items : [{
+					items : [ {
 								xtype : 'hiddenfield',
 								name : 'id'
+							},
+							{
+								xtype : 'textfield',
+								name : 'userName',
+								fieldLabel : '用户名',
+								allowBlank:false,
+								blankText:'用户名不能为空！'
 							}, {
 								xtype : 'textfield',
-								name : 'lanBlock',
-								fieldLabel : '地块'
+								inputType:'password',
+								name : 'password',
+								fieldLabel : '密  &nbsp;&nbsp;&nbsp; 码',
+								allowBlank:false,
+								blankText:'密码不能为空！',
+								minLength:6,
+								minLengthText:'密码长度为[6-20]',
+								maxLength:20,
+								maxLengthText:'密码长度为[6-20]'
 							}, {
 								xtype : 'textfield',
-								name : 'cityArea',
-								fieldLabel : '所在区域'
+								name : 'userType',
+								fieldLabel : '用户类型'
 							}, {
 								xtype : 'textfield',
-								name : 'address',
-								fieldLabel : '租赁地址'
+								name : 'email',
+								fieldLabel : 'E-mail',
+								regex: /^\s*\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*(\;\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*)*(\;)*\s*$/,
+                				regexText: '不是有效的邮箱地址！'
 							}, {
-								xtype : 'textfield',
-								name : 'propertys',
-								fieldLabel : '产权'
+								xtype : 'combo',
+								name : 'departId',
+								fieldLabel : '所属部门',
+								store:deptstore,
+								editable:false,
+								allowBlank:false
 							}, {
-								xtype : 'textfield',
-								name : 'propertyNo',
-								fieldLabel : '产权证号'
-							}, {
-								xtype : 'textfield',
-								name : 'landSize',
-								fieldLabel : '土地面积'
-							}, {
-								xtype : 'textfield',
-								name : 'roomSize',
-								fieldLabel : '房屋面积'
-							}, {
-								xtype : 'textfield',
-								name : 'nonOcc',
-								fieldLabel : '空置面积'
-							}, {
-								xtype : 'textfield',
-								name : 'geoLocation',
-								fieldLabel : '地理位置'
-							}/*, {
-								xtype : 'filefield',
-								name : 'realDisplay',
-								fieldLabel : '实景'
-							}*/],
+								xtype : 'combo',
+								name : 'roleId',
+//								valueField :"roleId",  
+//		        			    displayField: "roleName",  
+								fieldLabel : '角色名称',
+								store:rolestore,
+								editable:false,
+								allowBlank:false
+							}],
 					buttons : [{
 						text : '确定',
 						handler : function() {
@@ -240,11 +237,11 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 
 								if (form.getForm().isValid()) {
 									form.submit({
-										url : '../rent/updateRent.html',
+										url : '../user/updateUser.html',
 										method : 'POST',
 										success : function(form, action) {
 											Ext.Msg.alert('提示', '保存成功!');
-											rentstore.reload();
+											store.reload();
 										},
 										callback : function(){
 											console.debug(arguments);
@@ -261,7 +258,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 				}],
 				tbar : [{
 							text : '新增',
-							tooltip : '添加一个出租方',
+							tooltip : '添加一个新用户',
 							iconCls : 'add',
 							handler : function() {
 								var winForm = win.items.get(1);
@@ -288,7 +285,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 										winForm.hide();
 									}
 								} else {
-									Ext.Msg.alert('提示', '请选择一条需要修改的出租方信息');
+									Ext.Msg.alert('提示', '请选择一个修改用户');
 								}
 							}
 						}, '-', {
@@ -302,17 +299,17 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								if (selected) {
 									Ext.MessageBox.confirm('警告', '确认删除该条信息？',function callBack(id) {
 										if (id == 'yes') {
-											var record = rentstore.getAt('0');
+											var record = store.getAt('0');
 											Ext.Ajax.request({
-												url : '/AhDB/rent/deleteRent.html',
+												url : '/AhDB/user/deleteUser.html',
 												method : 'POST',
 												params : {
-													id : selected.get('id')
+													userName : selected.get('userName')
 												},
 												success : function(res, opts) {
 													Ext.MessageBox.alert('恭喜',
 															'删除成功！');
-													rentstore.reload();
+													store.reload();
 												},
 												failure : function(res, opts) {
 													Ext.MessageBox.alert(
@@ -328,29 +325,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								}
 
 							}
-						}, '-',{
-		                    text:'地图分布',
-		                    tooltip:'查看所有版块分布信息',
-		                    iconCls:'remove',
-		                    handler:function(){
-		                    	var map_win = win.getMap();
-		                		win.items.get(0).store.each(function(record){
-		                			map_win.codeAddress('上海市'+record.data.address,record);
-		                		});
-		                    }
-						}],
-						 getMap:function(){
-		                	var map_win = desktop.getWindow('map');
-		            		if(null==map_win){
-		            			map_win = new MyDesktop.Map({
-		            				app:app
-		            			});
-		            			map_win=map_win.createWindow().show();
-		            		}else{
-		            			map_win.show();
-		            		}
-		            		return map_win;
-              			  }
+						}]
 			});
 		}
 		return win;

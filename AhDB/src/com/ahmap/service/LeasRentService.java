@@ -11,6 +11,7 @@ import com.ahmap.dao.LeasRentDao;
 import com.ahmap.dao.LeasseeDao;
 import com.ahmap.domain.LeasRent;
 import com.ahmap.domain.LeasseeInfo;
+import com.ahmap.domain.ThirdRent;
 
 @Service
 public class LeasRentService {
@@ -66,7 +67,12 @@ public class LeasRentService {
 		List<LeasseeInfo> leasseeInfoList=leasseeDao.getAllLeassee();
 		leasRentDao.updateLeasRent(leasseeInfoList);
 	}
-	//更新租赁信息状态
+	//根据地块、城区、道路地址统计租赁信息
+	public List<LeasRent> getAllRentByArea(String cityArea,String lanBlock,String address,String start,String limit){
+		return leasRentDao.getAllRentByArea(cityArea,lanBlock,address,start, limit);
+	}
+	
+	//系统定时更新租赁信息状态
 	public void updateLimitDays() throws ParseException{
 		getLeasRentDao().updateLimitDays();
 	}

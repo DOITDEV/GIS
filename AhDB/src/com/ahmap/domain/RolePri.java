@@ -4,13 +4,16 @@ import java.util.Date;
 
 public class RolePri {
 	private int roleId;
-	private String roleName;
-	private String priv1;//菜单一
-	private String priv2;//菜单二
-	private String priv3;//菜单三
-	private String priv4;//菜单四
-	private String priv5;//菜单五
-	private String priv6;//菜单六
+	private String roleName;//角色名称
+	private int deptId;//所属部门
+	private String priv1;//Map
+	private String priv2;//用户管理
+	private String priv3;//租赁信息	
+	private String priv4;//出租方
+	private String priv5;//承租方
+	private String priv6;//支付信息
+	private String priv7;//第三方租赁
+	private String priv8;//菜单六
 	private Date createTime;
 	public int getRoleId() {
 		return roleId;
@@ -65,6 +68,24 @@ public class RolePri {
 	}
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+	public int getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
+	public String getPriv7() {
+		return priv7;
+	}
+	public void setPriv7(String priv7) {
+		this.priv7 = priv7;
+	}
+	public String getPriv8() {
+		return priv8;
+	}
+	public void setPriv8(String priv8) {
+		this.priv8 = priv8;
 	}
 	
 }

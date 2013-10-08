@@ -461,15 +461,8 @@ public class ReadXml {
 			InputStream input = new FileInputStream(DATA_LEAC_CONFIG); 
 			Document doc = sb.build(input);
 			Element root = doc.getRootElement();
-			//List<Element> tileList = new ArrayList<Element>();
-			//tileList = root.getChildren("DataBase");//.getChild("tile").getChildText("path");
-//			System.out.println("--------------name:"+root.getChild("name").getText());
-//			System.out.println("--------------address:"+root.getChild("address").getText());
-//			System.out.println("--------------lever:"+root.getChild("lever").getText());
-			
 			LeasRent lea = new LeasRent();
 			String lanBlock = root.getChild("lanBlock").getText();
-			String codNum = root.getChild("codNum").getText();
 			String address = root.getChild("address").getText();
 			String roomSize = root.getChild("roomSize").getText();
 			String nonOcc = root.getChild("nonOcc").getText();
@@ -485,16 +478,12 @@ public class ReadXml {
 			String handsel = root.getChild("handsel").getText();
 			String penalty = root.getChild("penalty").getText();
 			String tel = root.getChild("tel").getText();
-			String linker = root.getChild("linker").getText();
 			String incExplain = root.getChild("incExplain").getText();
 			String remark = root.getChild("remark").getText();
 			String nextPayDate = root.getChild("nextPayDate").getText();
 			String idCard = root.getChild("idCard").getText();
-			String busLicense = root.getChild("busLicense").getText();
-			String orgCode = root.getChild("orgCode").getText();
 			String rentStatus = root.getChild("rentStatus").getText();
 			String outDays = root.getChild("outDays").getText();
-			String holdType = root.getChild("holdType").getText();
 			String coors_x = root.getChild("coors_x").getText();
 			String coors_y = root.getChild("coors_y").getText();
 			

@@ -57,23 +57,22 @@ public class ThirdRentDao {
 			
 		//新增第三方出租信息
 		public void addRent(ThirdRent rent){
-			String sql="INSERT INTO thirdrent(id,lanblock ,cityarea,address,landsize,roomsize,nonocc,coors_x,coors_y,filler1,filler2,filler3)"+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			Object[] params = new Object[]{rent.getId(),rent.getLanBlock(),rent.getCityArea(),rent.getAddress(),rent.getLandSize(),rent.getRoomSize(),rent.getNonOcc(),
+			String sql="INSERT INTO thirdrent(id, lanblock, cityarea, address, landsize, roomsize, nonocc,coors_x, coors_y, filler1, filler2, filler3) VALUES (?, ?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?)";
+			Object[] params = new Object[]{incre.nextStringValue(),rent.getLanBlock(),rent.getCityArea(),rent.getAddress(),rent.getLandSize(),rent.getRoomSize(),rent.getNonOcc(),
 							rent.getCoors_x(),rent.getCoors_y(),rent.getFiller1(),rent.getFiller2(),rent.getFiller3()};
 			jdbcTemplate.update(sql, params);
 			
 		}
 		//删除第三方出租信息
-		public void deleteRent(ThirdRent rent){
-			String sql="DELETE FROM thirdrent where id='"+rent.getId()+"'";
-			jdbcTemplate.equals(sql);
+		public void deleteRent(String id){
+			String sql="DELETE FROM thirdrent where id='"+id+"'";
+			jdbcTemplate.update(sql);
 			
 		}
 		//修改第三方信息
 		public void updateRent(ThirdRent rent){
-			String sql="UPDATE thirdrent set lanblock=?,cityarea=?,address=?,landsize=?,roomsize=?,nonocc=?,coors_x=?,coors_y=?  where id=? and address=?";
-			Object[] params = new Object[]{rent.getLanBlock(),rent.getCityArea(),rent.getAddress(),rent.getLandSize(),rent.getRoomSize(),rent.getNonOcc(),
-					rent.getCoors_x(),rent.getCoors_y(),rent.getId(),rent.getAddress()};
+			String sql="UPDATE thirdrent set lanblock=?,cityarea=?,address=?,landsize=?,roomsize=?,nonocc=? where id=?";
+			Object[] params = new Object[]{rent.getLanBlock(),rent.getCityArea(),rent.getAddress(),rent.getLandSize(),rent.getRoomSize(),rent.getNonOcc(),rent.getId()};
 			jdbcTemplate.update(sql, params);
 		}
 		public int getCount(){
@@ -97,7 +96,7 @@ public class ThirdRentDao {
 		}
 		//根据地块查询
 		public List<ThirdRent> getAllRentsByBlock(String landBlock,String start,String limit){
-			String sqlStr = "SELECT * from thirdrent where  landblock like '%"+ landBlock +"%'"+limit+" offset "+start;
+			String sqlStr = "SELECT * from thirdrent where  lanblock like '%"+ landBlock +"%'"+limit+" offset "+start;
 			return jdbcTemplate.query(sqlStr, new RentMapper());
 		}
 		private static final class RentMapper implements RowMapper<ThirdRent> {
@@ -106,7 +105,7 @@ public class ThirdRentDao {
 					throws SQLException {
 				ThirdRent rent=new ThirdRent();
 				rent.setId(rs.getString("id"));
-				rent.setLanBlock(rs.getString("landblock"));
+				rent.setLanBlock(rs.getString("lanblock"));
 				rent.setCityArea(rs.getString("cityarea"));
 				rent.setAddress(rs.getString("address"));
 				rent.setLandSize(rs.getDouble("landsize"));

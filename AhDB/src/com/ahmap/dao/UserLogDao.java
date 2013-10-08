@@ -116,7 +116,7 @@ public class UserLogDao {
 	 */
 	public void updateUser(User user){
 		String sqlStr = " update chtuser set password=?,depart=?,usertype=?,email=? where username=?";
-		Object[] params = new Object[]{user.getPassword(),user.getDepart(),user.getUserType(),user.getEmail(),user.getUserName()};
+		Object[] params = new Object[]{user.getPassword(),user.getDepartId(),user.getUserType(),user.getEmail(),user.getUserName()};
 		jdbcTemplate.update(sqlStr, params);
 	}
 	

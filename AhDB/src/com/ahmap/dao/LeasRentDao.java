@@ -84,6 +84,25 @@ public class LeasRentDao {
 //					sql=sql+" limit"+limit+" offset "+start;
 			return jdbcTemplate.query(sql, new LeasRentMapper());
 		}
+		//根据地块、城区、道路地址统计租赁信息
+		public List<LeasRent> getAllRentByArea(String cityArea,String lanBlock,String address,String start,String limit){
+			String sql="Select r.id as rentid,r.lanblock as lanblock,r.cityarea as cityarea,r.address as address,r.propertys as propertys,r.propertyno as propertyno,r.landsize as landsize,r.roomsize as roomsize,r.nonocc as nonocc,"
+						+"r.geolocation as geolocation,r.realdisplay as realdisplay,r.isrent as isrent,r.coors_x as coors_x,r.coors_y as coors_y,l.id as leasid,l.leaholder as leaholder,l.cardtype as cardtype,l.idcard as idcard,l.tel as tel,"
+						+"l.timlimit as timlimit,l.startdate as startdate,l.enddate as enddate,l.monrent as monrent,l.yerrent as yerrent,l.wuyefee as wuyefee,l.parkfee as parkfee,l.handsel as handsel,l.penalty as penalty,l.paytype as paytype,"
+						+"l.rentstatus as rentstatus,l.outdays as outdays,l.incexplain as incexplain,l.nextpaydate as nextpaydate,l.createtime as createtime,l.isvalid as isvalid,l.remark as remark,l.dateflag as dateflag"
+						+"from rentinfo r,leasseeinfo l where r.id=l.rentid and l.isvalid='1'";
+			if(!cityArea.isEmpty()){
+				sql=sql+" and r.cityArea like '%"+cityArea+"'";
+			}
+			if(!lanBlock.isEmpty()){
+				sql=sql+" and r.lanblock like '%"+lanBlock+"%' ";
+			}
+			if(!address.isEmpty()){
+				sql=sql+" and l.address like '%"+address+"%'";			
+			}
+			sql=sql+" limit "+limit+" offset "+start;
+			return jdbcTemplate.query(sql, new LeasRentMapper());
+		}
 		//根据条件查询
 		public List<LeasRent> getLeasRentList(String start,String limit,String propertys,String lanBlock,String startDate,String endDate,String leaholder,String rentStatus){
 			String sql="Select r.id as rentid,r.lanblock as lanblock,r.cityarea as cityarea,r.address as address,r.propertys as propertys,r.propertyno as propertyno,r.landsize as landsize,r.roomsize as roomsize,r.nonocc as nonocc,"

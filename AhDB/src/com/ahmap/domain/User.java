@@ -4,16 +4,17 @@ import java.util.Date;
 
 @SuppressWarnings("serial")
 public class User implements Serializable{
-	
-	//private int userId;
+	private String id;
 	private String userName;
 	private String password;
-	private String depart;
-	private int roleId;
-	private int userType;
+	private String departId;
+	private String departName;
+	private String roleId;//角色id
+	private String roleName;
+	private int userType;//0 普通外网用户，1 公司内部用户
 	private String email;
 	private Date createTime;
-	private RolePri role;
+	private Date lastUpdateTime;//最后一次修改时间
 	
 	public Date getCreateTime() {
 		return createTime;
@@ -34,6 +35,12 @@ public class User implements Serializable{
 //		this.userId = userId;
 //	}
 	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getUserName() {
 		return userName;
 	}
@@ -46,11 +53,12 @@ public class User implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getDepart() {
-		return depart;
+	
+	public String getDepartId() {
+		return departId;
 	}
-	public void setDepart(String depart) {
-		this.depart = depart;
+	public void setDepartId(String departId) {
+		this.departId = departId;
 	}
 	public String getEmail() {
 		return email;
@@ -84,17 +92,30 @@ public class User implements Serializable{
 	public int getUserType() {
 		return userType;
 	}
-	public RolePri getRole() {
-		return role;
-	}
-	public void setRole(RolePri role) {
-		this.role = role;
-	}
-	public int getRoleId() {
+	
+	public String getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(String roleId) {
 		this.roleId = roleId;
+	}
+	public Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+	public void setLastUpdateTime(Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+	public String getDepartName() {
+		return departName;
+	}
+	public void setDepartName(String departName) {
+		this.departName = departName;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
 	}
 	
 }

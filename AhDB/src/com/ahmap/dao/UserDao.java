@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.incrementer.PostgreSQLSequenceMaxValueIncrementer;
 import org.springframework.stereotype.Repository;
 import com.ahmap.domain.User;
 import com.ahmap.domain.UserClass;
@@ -28,7 +29,9 @@ public class UserDao {
     private JdbcTemplate jdbcTemplate2;  
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;  
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate2;  
-      
+     
+    @Autowired
+    private PostgreSQLSequenceMaxValueIncrementer incre3;
       
       
     @Autowired  
@@ -101,7 +104,7 @@ public class UserDao {
 //						//user.setUserId(rs.getInt("id"));
 //				    	user.setUserName(rs.getString("userName"));
 //				    	user.setPassword(rs.getString("passWord"));
-//				    	user.setDepart(rs.getString("depart"));
+//				    	user.setDepart(rs.getString("departid"));
 //				    	user.setEmail(rs.getString("email"));
 //				    	user.setUserType(rs.getInt("userType"));
 //						//user.setLastIp(rs.getString("lastip"));
@@ -129,7 +132,7 @@ public class UserDao {
 	}
 	
 	public List<User> getAllUser(){
-		String sqlStr = "SELECT * from chtuser";
+		String sqlStr = "SELECT u.id as id,u.usertype as usertype,u.username as username,u.password as password,u.departid as departid,u.email as email,u.createtime as createtime,u.roleid as roleid,r.rolename as rolename from chtuser u,rolepri r where u.roleid=r.roleid";
 		return jdbcTemplate.query(sqlStr, new UserMapper());
 	}
 	
@@ -141,12 +144,14 @@ public class UserDao {
 	private static final class UserMapper implements RowMapper<User> {
 	    public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 	    	User user = new User();
-	    	//user.setUserId(rs.getInt("id"));
-	    	user.setUserType(rs.getInt("userType"));
-	    	user.setUserName(rs.getString("USERNAME"));
-	    	user.setPassword(rs.getString("passWord"));
-	    	user.setDepart(rs.getString("depart"));
+	    	user.setId(rs.getString("id"));
+	    	user.setUserType(rs.getInt("usertype"));
+	    	user.setUserName(rs.getString("username"));
+	    	user.setPassword(rs.getString("password"));
+	    	user.setDepartId(rs.getString("departid"));
 	    	user.setEmail(rs.getString("email"));
+	    	user.setRoleId(rs.getString("roleid"));
+	    	user.setRoleName(rs.getString("rolename"));
 			//user.setLastIp(rs.getString("lastip"));
 			user.setCreateTime(rs.getDate("createTime"));
 	        return user;
@@ -158,11 +163,11 @@ public class UserDao {
 	 * @param user
 	 */
 	public void addUser(User user) throws UnsupportedEncodingException{
-		String sqlStr = " INSERT INTO chtuser(username,password,depart,usertype,email,createTime)"+ " VALUES(?,?,?,?,?,?)";
+		String sqlStr = " INSERT INTO chtuser(id,email, departid, username, usertype, createtime, password, roleid, lastupdatetime)  VALUES (?,?, ?, ?, ?, ?, ?, ?, ?);";
 		 //最后的aa表示“上午”或“下午”    HH表示24小时制    如果换成hh表示12小时制  
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss aa");  
 		 //temp_str=sdf.format(dt); 
-		Object[] params = new Object[]{user.getUserName(),user.getPassword(),user.getDepart(),user.getUserType(),user.getEmail(),user.getCreateTime()};
+		Object[] params = new Object[]{incre3.nextStringValue(),user.getEmail(),user.getDepartId(),user.getUserName(),user.getUserType(),user.getCreateTime(),user.getPassword(),user.getRoleId(),user.getLastUpdateTime()};
 		jdbcTemplate.update(sqlStr, params);
 	}
 	
@@ -180,8 +185,8 @@ public class UserDao {
 	 * @param user
 	 */
 	public void updateUser(User user){
-		String sqlStr = " update chtuser set password=?,depart=?,usertype=?,email=? where username=?";
-		Object[] params = new Object[]{user.getPassword(),user.getDepart(),user.getUserType(),user.getEmail(),user.getUserName()};
+		String sqlStr = " update chtuser set password=?,departid=?,usertype=?,email=? where username=?";
+		Object[] params = new Object[]{user.getPassword(),user.getDepartId(),user.getUserType(),user.getEmail(),user.getUserName()};
 		jdbcTemplate.update(sqlStr, params);
 	}
 	

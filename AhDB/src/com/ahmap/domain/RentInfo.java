@@ -1,6 +1,9 @@
 package com.ahmap.domain;
 
-public class RentInfo {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class RentInfo implements Serializable{
 	//出租方信息
 	private String id;
 	private String lanBlock;//地块

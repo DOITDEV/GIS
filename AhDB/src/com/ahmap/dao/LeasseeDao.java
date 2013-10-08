@@ -24,7 +24,7 @@ public class LeasseeDao {
 	    private NamedParameterJdbcTemplate namedParameterJdbcTemplate2;
 	
 	    @Autowired
-		private PostgreSQLSequenceMaxValueIncrementer incre;
+		private PostgreSQLSequenceMaxValueIncrementer incre2;
 	    
 	    @Autowired  
 	    @Resource(name="dataSource")  
@@ -67,7 +67,7 @@ public class LeasseeDao {
 		//插入承租人信息2
 		public void addLeassee2(LeasseeInfo lea){
 			String sql="INSERT INTO leasseeinfo(id,rentid,lanblock,cityarea,address ,leaholder,cardtype,idcard,tel,timlimit,startdate,enddate,monrent,yerrent,wuyefee,parkfee,handsel,penalty,paytype,rentstatus,outdays,incexplain,nextpaydate,createtime,isvalid,remark,filler3,filler4,filler5)"+ " VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-			Object[] params = new Object[]{incre.nextIntValue(),lea.getRentId(),lea.getLanBlock(),lea.getCityArea(),lea.getAddress(),lea.getLeaholder(),lea.getCardType(),lea.getIdCard(),lea.getTel(),lea.getTimLimit(),lea.getStartDate(),lea.getEndDate(),lea.getMonRent(),lea.getYerRent(),
+			Object[] params = new Object[]{incre2.nextStringValue(),lea.getRentId(),lea.getLanBlock(),lea.getCityArea(),lea.getAddress(),lea.getLeaholder(),lea.getCardType(),lea.getIdCard(),lea.getTel(),lea.getTimLimit(),lea.getStartDate(),lea.getEndDate(),lea.getMonRent(),lea.getYerRent(),
 							lea.getWuyeFee(),lea.getParkFee(),lea.getHandsel(),lea.getHandsel(),lea.getPayType(),lea.getRentStatus(),lea.getOutDays(),lea.getIncExplain(),lea.getNextPayDate(),lea.getCreateTime(),lea.getIsValid(),lea.getRemark(),lea.getFiller3(),lea.getFiller4(),lea.getFiller5()};
 			jdbcTemplate.update(sql, params);
 		}

@@ -13,21 +13,27 @@ public class ThirdRentService {
 	
 	@Autowired
 	private ThirdRentDao thirdRentDao;
-	
+	//录入第三方出租信息
 	public String insertRent(ThirdRent rent){
 		thirdRentDao.addRent(rent);
-		return "新增成功！"; 
+		return "{success:true,msg:'test'}";
+//		return "新增成功！"; 
 	}
-	public String deleteRent(ThirdRent rent){
-		thirdRentDao.deleteRent(rent);
+	//删除第三方出租信息
+	public String deleteRent(String id){
+		thirdRentDao.deleteRent(id);
 		return "success";
 	}
+	//修改第三方出租信息
 	public String updateRent(ThirdRent rent){
 		thirdRentDao.updateRent(rent);
 		return "修改成功！";
 	}
 	public List<ThirdRent> getAllRents(String start, String limit){
 		return thirdRentDao.getAllRents(start, limit);
+	}
+	public int getCount(){
+		return thirdRentDao.getCount();
 	}
 	//根据城区统计出租信息
 	public List<ThirdRent> getAllRentByArea(String cityArea,String start,String limit){

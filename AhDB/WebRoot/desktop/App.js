@@ -20,7 +20,10 @@ Ext.define('MyDesktop.App', {
         'MyDesktop.BogusModule',
         'MyDesktop.rentinfo.Rent',
         'MyDesktop.Settings',
-        'MyDesktop.leas.LesseeGridWindow'
+        'MyDesktop.leas.LesseeGridWindow',
+        'MyDesktop.user.UserWindow',
+        'MyDesktop.rentinfo.ThirdRent',
+        'MyDesktop.pay.PayWindow'
     ],
 
     init: function() {
@@ -44,7 +47,10 @@ Ext.define('MyDesktop.App', {
             new MyDesktop.BogusMenuModule(),
             new MyDesktop.BogusModule(),
             new MyDesktop.rentinfo.Rent(),
-            new MyDesktop.leas.LesseeGridWindow()
+            new MyDesktop.leas.LesseeGridWindow(),
+            new MyDesktop.user.UserWindow(),
+            new MyDesktop.rentinfo.ThirdRent(),
+            new MyDesktop.pay.PayWindow()
         ];
     },
 
@@ -62,12 +68,12 @@ Ext.define('MyDesktop.App', {
                 model: 'Ext.ux.desktop.ShortcutModel',
                 data: [
                     { name: '租赁信息', iconCls: 'grid-shortcut', module: 'grid-win' },
-                    { name: '用户管理', iconCls: 'accordion-shortcut', module: 'acc-win' },
+                    { name: '用户管理', iconCls: 'accordion-shortcut', module: 'user-win' },
                     { name: 'Map', iconCls: 'map-shortcut', module: 'map' },
                     { name: '出租方', iconCls: 'rent-shortcut', module: 'grid-win-rent' },
                     { name: '承租方', iconCls: 'leas-shortcut', module: 'lessee-win' },
-                    { name: '支付信息', iconCls: 'pay-shortcut', module: 'acc-win' },
-                    { name: '第三方信息', iconCls: 'thirdrent-shortcut', module: 'acc-win' },
+                    { name: '支付信息', iconCls: 'pay-shortcut', module: 'pay-win' },
+                    { name: '第三方信息', iconCls: 'thirdrent-shortcut', module: 'third-rent' },
                     { name: 'System Status', iconCls: 'cpu-shortcut', module: 'systemstatus'}
                 ]
             }),
@@ -121,7 +127,7 @@ Ext.define('MyDesktop.App', {
     },
 
     onLogout: function () {
-        Ext.Msg.confirm('Logout', 'Are you sure you want to logout?');
+        Ext.Msg.confirm('Logout', '您确定要退出系统?');
     },
 
     onSettings: function () {

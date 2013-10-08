@@ -1,10 +1,12 @@
 package com.ahmap.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ahmap.cons.CommonUtils;
 import com.ahmap.dao.PaymentInfoDao;
 import com.ahmap.domain.PaymentInfo;
 
@@ -15,6 +17,8 @@ public class PaymentInfoService {
 	private PaymentInfoDao paymentInfoDao;
 	
 	public String insertPay(PaymentInfo pay){
+		Date date=new Date();
+		pay.setCreateTime(CommonUtils.convertDateToStr(date));
 		paymentInfoDao.addPay(pay);
 		return "收款成功！"; 
 	}

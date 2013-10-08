@@ -58,8 +58,9 @@ public class UserService {
 	 * 更新用户信息
 	 * @param user
 	 */
-	public void updateUser(User user){
+	public String updateUser(User user){
 		userDao.updateUser(user);
+		return "success";
 	}
 
 	/**

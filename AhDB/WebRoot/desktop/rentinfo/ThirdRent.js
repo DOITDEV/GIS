@@ -3,41 +3,27 @@
  * http://www.sencha.com/license
  */
 
-Ext.define('MyDesktop.rentinfo.Rent', {
+Ext.define('MyDesktop.rentinfo.ThirdRent', {
 	extend : 'Ext.ux.desktop.Module',
-	requires : ['Ext.data.*', 'Ext.util.Format', 'Ext.grid.Panel',
+	requires : ['Ext.data.ArrayStore', 'Ext.util.Format', 'Ext.grid.Panel',
 			'Ext.grid.RowNumberer', 'Ext.from.*'],
 
-	id : 'grid-win-rent',
+	id : 'third-rent',
 
 	init : function() {
 		this.launcher = {
-			text : '出租方信息',
+			text : '第三方租赁信息',
 			iconCls : 'icon-grid'
 		};
 	},
 
 	createWindow : function() {
 		var desktop = this.app.getDesktop();
-		var win = desktop.getWindow('grid-win-rent');
+		var win = desktop.getWindow('third-rent');
 		if (!win) {
 
 			var rentstore = new Ext.data.JsonStore({
 						autoLoad : true,
-//						proxy : {
-//							type : 'ajax',
-//							api : {
-//								create : '/AhDB/rent/addRent.html',
-//								read : '/AhDB/rent/getAllRents.html',
-//								update : '/AhDB/rent/updateRent.html',
-//								destroy : '/AhDB/rent/deleteRent.html'
-//							},
-//							reader : {
-//								type : 'json',
-//								root : 'rent',
-//								idProperty : 'id'
-//							}
-//						},
 						fields : [{
 									name : 'lanBlock'
 								}, {
@@ -45,56 +31,41 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								}, {
 									name : 'address'
 								}, {
-									name : 'propertys'
-								}, {
-									name : 'propertyNo'
-								}, {
 									name : 'landSize'
 								}, {
 									name : 'roomSize'
 								}, {
 									name : 'nonOcc'
 								}, {
-									name : 'geoLocation'
-								}, {
-									name : 'realDisplay'
-								}, {
-									name : 'isRent'
-								}, {
-									name : 'isRentName'
-								}, {
 									name : 'id'
-								}, {
-									name : 'coors_x'
-								}, {
-									name : 'coors_y'
 								}],
 								//设置分页大小  
-							    pageSize:15,  
-							    proxy: {  
-							        type: 'ajax',  
-							        url: '../rent/getAllRents.html',
-							        reader: {  
-							            //数据格式为json  
-							            type: 'json',  
-							            root: 'rent',  
-							            //获取数据总数  
-							            totalProperty: 'totalCount'  
-							        }  
-							    }
+						    pageSize:15,  
+						    proxy: {  
+						        type: 'ajax',  
+						        url: '../rent/getAllThirdRents.html',
+						        reader: {  
+						            //数据格式为json  
+						            type: 'json',  
+						            root: 'rent',  
+						            //获取数据总数  
+						            totalProperty: 'totalCount'  
+						        }  
+						    }
 					});
-					var pagingToolbar = new Ext.PagingToolbar({
+				var pagingToolbar = new Ext.PagingToolbar({
 				      emptyMsg:"没有数据",
 				      displayInfo:true,
 				      displayMsg:"显示从{0}条数据到{1}条数据，共{2}条数据",
 				      store:rentstore
 				      //pageSize:10 
-				 	});
+				 });
+
 			win = desktop.createWindow({
-				id : 'grid-win-rent',
-				title : '出租方',
-				width : 800,
-				height : 580,
+				id : 'third-rent',
+				title : '第三方租赁',
+				width : 740,
+				height : 520,
 				iconCls : 'icon-grid',
 				animCollapse : false,
 				constrainHeader : true,
@@ -121,16 +92,6 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								sortable : true,
 								dataIndex : 'address'
 							}, {
-								text : "产权",
-								width : 70,
-								sortable : true,
-								dataIndex : 'propertys'
-							}, {
-								text : "产权证号",
-								width : 70,
-								sortable : true,
-								dataIndex : 'propertyNo'
-							}, {
 								text : "土地面积",
 								width : 70,
 								sortable : true,
@@ -145,27 +106,9 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								width : 70,
 								sortable : true,
 								dataIndex : 'nonOcc'
-							}, {
-								text : "地理位置",
-								width : 70,
-								sortable : true,
-								dataIndex : 'geoLocation'
-							}, {
-								text : "实景",
-								width : 70,
-								sortable : true,
-								dataIndex : 'realDisplay'
-							}, {
-								text : "是否出租",
-								width : 70,
-								sortable : true,
-								dataIndex : 'isRentName'
 							}],
 					listeners : {
 						itemdblclick : function(g, rec) {
-							/*var map_win = win.getMap();
-                        		map_win.deleteOverlays();
-                        		map_win.codeAddress('上海市'+rec.data.address,rec);*/
 							if (!g.ownerCt.nextSibling().isHidden()) {
 								g.ownerCt.nextSibling().getForm()
 										.loadRecord(rec);
@@ -202,15 +145,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								xtype : 'textfield',
 								name : 'address',
 								fieldLabel : '租赁地址'
-							}, {
-								xtype : 'textfield',
-								name : 'propertys',
-								fieldLabel : '产权'
-							}, {
-								xtype : 'textfield',
-								name : 'propertyNo',
-								fieldLabel : '产权证号'
-							}, {
+							},{
 								xtype : 'textfield',
 								name : 'landSize',
 								fieldLabel : '土地面积'
@@ -222,15 +157,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								xtype : 'textfield',
 								name : 'nonOcc',
 								fieldLabel : '空置面积'
-							}, {
-								xtype : 'textfield',
-								name : 'geoLocation',
-								fieldLabel : '地理位置'
-							}/*, {
-								xtype : 'filefield',
-								name : 'realDisplay',
-								fieldLabel : '实景'
-							}*/],
+							}],
 					buttons : [{
 						text : '确定',
 						handler : function() {
@@ -240,7 +167,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 
 								if (form.getForm().isValid()) {
 									form.submit({
-										url : '../rent/updateRent.html',
+										url : '../rent/updateThirdRent.html',
 										method : 'POST',
 										success : function(form, action) {
 											Ext.Msg.alert('提示', '保存成功!');
@@ -304,7 +231,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 										if (id == 'yes') {
 											var record = rentstore.getAt('0');
 											Ext.Ajax.request({
-												url : '/AhDB/rent/deleteRent.html',
+												url : '../rent/deleteThirdRent.html',
 												method : 'POST',
 												params : {
 													id : selected.get('id')
@@ -328,29 +255,7 @@ Ext.define('MyDesktop.rentinfo.Rent', {
 								}
 
 							}
-						}, '-',{
-		                    text:'地图分布',
-		                    tooltip:'查看所有版块分布信息',
-		                    iconCls:'remove',
-		                    handler:function(){
-		                    	var map_win = win.getMap();
-		                		win.items.get(0).store.each(function(record){
-		                			map_win.codeAddress('上海市'+record.data.address,record);
-		                		});
-		                    }
-						}],
-						 getMap:function(){
-		                	var map_win = desktop.getWindow('map');
-		            		if(null==map_win){
-		            			map_win = new MyDesktop.Map({
-		            				app:app
-		            			});
-		            			map_win=map_win.createWindow().show();
-		            		}else{
-		            			map_win.show();
-		            		}
-		            		return map_win;
-              			  }
+						}]
 			});
 		}
 		return win;

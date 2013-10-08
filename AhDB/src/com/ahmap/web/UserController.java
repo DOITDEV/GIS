@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.ahmap.cons.CommonUtils;
 import com.ahmap.domain.User;
 import com.ahmap.domain.UserClass;
 import com.ahmap.service.UserService;
@@ -107,12 +109,13 @@ public class UserController{
 	} 
 	
 	@RequestMapping("/addUser")  
-	public @ResponseBody  String addUser(HttpEntity<User> requestEntity) throws UnsupportedEncodingException{ 
-		 User user = requestEntity.getBody(); 
+	public @ResponseBody  String addUser(User requestEntity) throws UnsupportedEncodingException{ 
+		 User user = requestEntity; 
 		 String temp_str="";  
 		 Date dt = new Date();  
-		 user.setCreateTime(dt);     
-		 System.out.println(user.getDepart());
+		 user.setCreateTime(dt); 
+		 user.setLastUpdateTime(dt);
+//		 System.out.println(user.getDepart());
 		 return	 userService.addUser(user); 
 	} 
 	
@@ -124,10 +127,13 @@ public class UserController{
 	} 
 	
 	@RequestMapping("/updateUser")  
-	public  @ResponseBody String updateUser(HttpEntity<User> requestEntity){    
-		User user = requestEntity.getBody(); 
-		userService.updateUser(user);
-		return "success";
+	public  @ResponseBody String updateUser(User requestEntity) throws UnsupportedEncodingException{    
+		User user = requestEntity; 
+		if(!CommonUtils.isEmpty(user.getId())){
+			return userService.updateUser(user);
+		}else{
+			return addUser(user);
+		}
 	}
 	
 }
